@@ -39,11 +39,10 @@ public class GestorMemoria {
         PaginaInfo info = paginas.get(pagina);
         info.accedida = true;
         if (escritura) info.modificada = true;
-        hits++;  // Incrementar hits aquí
+        hits++; 
     }
 
     public void manejarFalloPagina(int pagina, boolean modificada) {
-        // Implementación del algoritmo de segunda oportunidad
         Iterator<Map.Entry<Integer, PaginaInfo>> it = paginas.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry<Integer, PaginaInfo> entry = it.next();
@@ -55,7 +54,7 @@ public class GestorMemoria {
         }
         
         paginas.put(pagina, new PaginaInfo(modificada));
-        fallos++;  // Incrementar fallos aquí
+        fallos++; 
     }
 
     public void resetearBitsAcceso() {

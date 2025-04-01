@@ -32,7 +32,7 @@ public class MenuPrincipal {
                     String valor2 = reader.readLine();
 
                     CrearReferencias cr = new SimuladorReferencias().new CrearReferencias();
-                    cr.crearReferencia(valor2, Integer.parseInt(valor1));
+                    cr.crearReferencia("Caso2\\imagenes\\"+valor2, Integer.parseInt(valor1));
 
                 } catch (IOException e) {
                     System.out.println("Error leyendo de la consola");
@@ -64,7 +64,7 @@ public class MenuPrincipal {
     private static int obtenerOpcionValida(Scanner scanner) {
         while (!scanner.hasNextInt()) {
             System.out.println("Entrada inválida. Por favor ingrese un número.");
-            scanner.next(); // Limpiar entrada inválida
+            scanner.next(); 
             System.out.print("Seleccione una opción: ");
         }
         return scanner.nextInt();
@@ -73,10 +73,10 @@ public class MenuPrincipal {
     
     private static void ejecutarSimulacionPaginacion(Scanner scanner) {
         System.out.print("\nIngrese la ruta del archivo de referencias (ej: referencias_ref.txt): ");
-        scanner.nextLine(); // Limpiar buffer
+        scanner.nextLine();
         String rutaReferencias = scanner.nextLine();
         
-        // Validar extensión .txt
+        // validar extensión texto
         if (!rutaReferencias.toLowerCase().endsWith(".txt")) {
             System.out.println("Error: El archivo debe tener extensión .txt");
             return;
@@ -91,7 +91,7 @@ public class MenuPrincipal {
         System.out.print("Ingrese el número de marcos de página: ");
         while (!scanner.hasNextInt()) {
             System.out.println("Entrada inválida. Por favor ingrese un número.");
-            scanner.next(); // Limpiar entrada inválida
+            scanner.next();
             System.out.print("Ingrese el número de marcos de página: ");
         }
         int numMarcos = scanner.nextInt();
