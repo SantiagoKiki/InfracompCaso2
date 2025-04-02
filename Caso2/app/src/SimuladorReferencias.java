@@ -88,7 +88,10 @@ public class SimuladorReferencias {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        System.out.println("Archivo de referencias creado con nombre referencias.txt) " );
+        System.out.println("Con un número de referencias: " + referencias.size());
         }
+        
 
     }
 
