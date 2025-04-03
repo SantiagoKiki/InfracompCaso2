@@ -1,25 +1,19 @@
 package app.src;
 
-import java.util.concurrent.locks.Lock;
-
 public class ActualizadorEstado implements Runnable {
     private final GestorMemoria gestorMemoria;
-    private final Lock lock;
     private volatile boolean activo = true;
 
-    public ActualizadorEstado(GestorMemoria gestorMemoria, Lock lock) {
+    public ActualizadorEstado(GestorMemoria gestorMemoria) {
         this.gestorMemoria = gestorMemoria;
-        this.lock = lock;
     }
 
     @Override
     public void run() {
         while (activo) {
-            lock.lock();
-            try {
+            // Sincronizamos sobre el objeto gestorMemoria
+            synchronized (gestorMemoria) {
                 gestorMemoria.resetearBitsAcceso();
-            } finally {
-                lock.unlock();
             }
             
             try {

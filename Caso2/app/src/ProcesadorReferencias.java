@@ -1,19 +1,16 @@
 package app.src;
 
 import java.util.List;
-import java.util.concurrent.locks.Lock;
 
 public class ProcesadorReferencias implements Runnable {
     private final List<String> referencias;
     private final GestorMemoria gestorMemoria;
-    private final Lock lock;
     private volatile boolean activo = true;
     private final int numMarcos;
 
-    public ProcesadorReferencias(List<String> referencias, GestorMemoria gestorMemoria, Lock lock, int numMarcos) {
+    public ProcesadorReferencias(List<String> referencias, GestorMemoria gestorMemoria, int numMarcos) {
         this.referencias = referencias;
         this.gestorMemoria = gestorMemoria;
-        this.lock = lock;
         this.numMarcos = numMarcos;
     }
 
@@ -22,7 +19,6 @@ public class ProcesadorReferencias implements Runnable {
         try {
             for (int i = 0; i < referencias.size() && activo; i++) {
                 procesarReferencia(referencias.get(i));
-                
                 if (i % 10000 == 0) {
                     Thread.sleep(1);
                 }
@@ -37,15 +33,13 @@ public class ProcesadorReferencias implements Runnable {
         int pagina = Integer.parseInt(partes[1]);
         boolean escritura = partes[3].equals("W");
 
-        lock.lock();
-        try {
+        // Sincronizamos sobre el objeto gestorMemoria para acceder de forma exclusiva
+        synchronized (gestorMemoria) {
             if (gestorMemoria.contienePagina(pagina)) {
                 gestorMemoria.actualizarPagina(pagina, escritura);
             } else {
                 gestorMemoria.manejarFalloPagina(pagina, escritura);
             }
-        } finally {
-            lock.unlock();
         }
     }
 
